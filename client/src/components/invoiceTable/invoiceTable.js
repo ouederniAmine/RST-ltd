@@ -17,7 +17,7 @@ const InvoiceTable = (props) => {
     let arr =[]
 
     axios
-      .get("http://localhost:3001/api/invoices")
+      .get("http://localhost:3001/api/users")
       .then((res) => {
         setLength(res.data.length);
         setData(res.data);
@@ -26,7 +26,7 @@ const InvoiceTable = (props) => {
         console.log(err);
       });
       axios
-      .get("http://localhost:3001/api/clients")
+      .get("http://localhost:3001/api/users")
       .then((res) => {
         //update the data with the client name
         for (let i = 0; i < length; i++) {

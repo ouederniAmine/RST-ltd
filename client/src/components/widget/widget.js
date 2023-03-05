@@ -8,7 +8,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Widget = ({ type }) => {
-  let data = {};
+  let data = {} ;
 
   //temporary
   const amount = 100;

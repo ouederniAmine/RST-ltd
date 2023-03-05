@@ -8,23 +8,15 @@ const Table = (props) => {
   const [data, setData] = useState({
     id:0,
     name:"", 
-    phone:"",
-    date:"",
-    pdflink:""
+    email:"",
+    currentBalance:"",
+  });
+  useEffect(() => {
+    console.log(data );
   });
 
   useEffect(() => {
     let arr =[]
-
-    axios
-      .get("http://localhost:3001/api/invoices")
-      .then((res) => {
-        setData(res.data);
-        })
-
-      .catch((err) => {
-        console.log(err);
-      });
       axios
       .get("http://localhost:3001/api/clients")
       .then((res) => {
@@ -32,16 +24,14 @@ const Table = (props) => {
         let newData = {
           id:0,
           name:"", 
-          phone:2,
-          date:"",
-          pdflink:""
+          email:"",
+          currentBalance:"",
         }
         res.data.map((item)=>{
           newData.id = item.id
-          newData.name = item.name
-          newData.phone = item.phone
-          newData.date = item.date
-          newData.pdflink = item.pdflink
+           item.fullname = "hey"
+          item.email =newData.email 
+          item.currentBalance = 2
         })
         setData(res.data)
         console.log(newData)
@@ -56,24 +46,19 @@ const Table = (props) => {
     { field: "id", headerName: "ID", width: 70 },
     
     {
-      field: "name",
+      field: "fullname",
       headerName: "Client Name",
       width: 230,
     },
   
     {
-      field: "phone",
-      headerName: "Phone",
+      field: "email",
+      headerName: "Client Email",
       width: 200,
     },
     {
-      field: "date",
-      headerName: "Created on",
-      width: 200,
-    },
-    {
-      field: "pdfLink",
-      headerName: "PDF Link",
+      field: "currentBalance",
+      headerName: "Current Balance",
       width: 200,
     }
    
@@ -89,11 +74,10 @@ const Table = (props) => {
   return (
     <div className="datatable">
  <div className="datatableTitle">
-         Invoices
+         Clients
       </div>
        
-       
-      <DataGrid
+       <DataGrid
         className="datagrid"
         rows={data}
         columns={userColumns.concat(actionColumn)}
