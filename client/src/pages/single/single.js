@@ -6,32 +6,19 @@ import axios from "axios";
 const Single = () => {
   const [data, setData] = useState({
     id:0,
-    name:"", 
+    email:"", 
     phone:"",
     date:"",
     pdflink:""
   });
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/api/invoices")
-      .then((res) => {
-        setData(res.data);
-        })
-
-      .catch((err) => {
-        console.log(err);
-      });
+    let clientId = window.location.pathname.split("/")[3];
       axios
-      .get("http://localhost:3001/api/clients")
+      .get("http://localhost:3001/api/client/"+clientId)
       .then((res) => {
-        //get the invoice id from the url
-        let invoiceId = window.location.pathname.split("/")[2];
-        //get the invoice from the invoices array
-        let invoice = res.data.find((invoice) => invoice.id == invoiceId);
-   
-        setData(invoice)
-        console.log(invoice)
+        setData(res.data[0]);
+        console.log(res.data)
       })
       .catch((err) => {
         console.log(err);
@@ -47,24 +34,24 @@ const Single = () => {
         <Navbar />
         <div className="top">
           <div className="left">
-            <h1 className="title">Invoice Informations</h1>
+            <h1 className="title">Client Informations</h1>
             <div className="item">
               
               <div className="details">
               <div className="detailItem">
                   <span className="itemKey">Client Name:</span>
-                  <span className="itemValue">{data.name}</span>
+                  <span className="itemValue">{data.email}</span>
                 </div>
                 <div className="detailItem">
                   <span className="itemKey">Date:</span>
-                  <span className="itemValue">{data.date}</span>
+                  <span className="itemValue"></span>
                 </div>
                 <div className="detailItem">
                   <span className="itemKey">Phone:</span>
-                  <span className="itemValue">{data.phone}</span>
+                  <span className="itemValue"></span>
                 </div>
              
-                <button className="linkbu">PDF link</button>
+                <button className="linkbu">Delete User</button>
               </div>
             </div>
           </div>

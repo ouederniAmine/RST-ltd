@@ -45,23 +45,77 @@ router.get('/clients', async (req, res) => {
         res.status(500).json({message: 'Something went wrong'});
     }
 });
-router.post('/invoices', async (req, res) => {
+router.get('/client/:userid', async (req, res) => {
     try {
-        // insert into table invoices the values of columns : clientid, responses, date, pdflink
-        const {clientid, responses, pdflink} = req.body;
-        const date = new Date();
-        const query = `INSERT INTO invoices (clientid, responses, date, pdflink) VALUES ('${clientid}', '${responses}', '${date.toDateString()}', '${pdflink}')`;
-        const result = await client
-        .query
-        (query);
-        res.json(result.rows);
+        // select all from table users where id = userid
+        const {userid} = req.params;
+        const query = `SELECT * FROM users WHERE id = '${userid}'`;
+        client.query(
+            query,
+            (err, result) => {
+                res.json(result);
+            }
+          );
+      
+    } catch (e) {
+        res.status(500).json({message: 'Something went wrong'});
+    }
+});
+
+
+router.post('/client', async (req, res) => {
+    try {
+        // insert into table users the values of columns :  'fullname', 'cell_phone', 'email', 'pwd', 'current_balance', 'funds_on_hold', 'withdrawable_balance', 'date_of_birth', 'country', 'company_name', 'account_number', 'btc_wallet', 'bank_name', 'swift', 'iban', 'beneficiary_name', 'beneficiary_address', 'contact_information', 'bank_address'
+        const {fullname, email, pwd, current_balance, funds_on_hold, withdrawable_balance ,date_of_birth, country,company_name, account_number, btc_wallet, bank_name, swift, iban, beneficiary_name, beneficiary_address, contact_information, bank_address} = req.body;
+        console.log(req.body)
+        const query = `INSERT INTO users (fullname, email, pwd, current_balance, funds_on_hold, withdrawable_balance ,date_of_birth, country,company_name, account_number, btc_wallet, bank_name, swift, iban, beneficiary_name, beneficiary_address, contact_information, bank_address) VALUES ('${fullname}', '${email}', '${pwd}', '${current_balance}', '${funds_on_hold}', '${withdrawable_balance}' ,'${date_of_birth}', '${country}', '${company_name}', '${account_number}', '${btc_wallet}', '${bank_name}', '${swift}', '${iban}', '${beneficiary_name}', '${beneficiary_address}', '${contact_information}', '${bank_address}')`;
+        client.query(
+            query,
+            (err, result) => {
+                console.log(err)
+                res.json(result);
+            }
+          );
+        
     } catch (e) {
         console.log(e)
 
         res.status(500).json({message: 'Something went wrong'});
     }
 });
+router.delete('/client/:userid', async (req, res) => {
+    try {
+        // delete from table users where id = userid
+        const {userid} = req.params;
+        const query = `DELETE FROM users WHERE id = '${userid}'`;
+        client.query(
+            query,
+            (err, result) => {
+                res.json(result);
+            }
+            );
+    } catch (e) {
+        res.status(500).json({message: 'Something went wrong'});
+    }
+});
 
+router.put('/client/:userid', async (req, res) => {
+    try {
+        // update table users where id = userid
+        const {userid} = req.params;
+        const {fullname, email, pwd, current_balance, funds_on_hold, withdrawable_balance ,date_of_birth, country,company_name} = req.body;
+        const query = `UPDATE users SET fullname = '${fullname}', email = '${email}', pwd = '${pwd}', current_balance = '${current_balance}', funds_on_hold = '${funds_on_hold}', withdrawable_balance = '${withdrawable_balance}' ,date_of_birth = '${date_of_birth}', country = '${country}',company_name = '${company_name}' WHERE id = '${userid}'`;
+        client.query(
+            query,
+            (err, result) => {
+                res.json(result);
+                console.log(err)
+            }
+            );
+    } catch (e) {
+        res.status(500).json({message: 'Something went wrong'});
+    }
+});
 
 
 module.exports = router;

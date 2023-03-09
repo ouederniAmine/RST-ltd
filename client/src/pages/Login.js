@@ -7,7 +7,9 @@ export default function LoginPage(){
         <div className="max-w-md w-full space-y-8">
              <Header
                 heading="Login to your account"
-                paragraph="Don't have an account yet? Ask your administrator to create one for you."
+                paragraph="Don't have an account yet?"
+                linkName="Login"
+              linkUrl="/signUp"
                 />
             <Login/>
         </div>

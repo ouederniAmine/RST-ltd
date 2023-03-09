@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { signupFields } from "../../constants/formFields"
 import FormAction from "./FormAction";
 import Input from "./Input";
-import React, { useCallback } from "react";
+import React from "react";
 import { useNavigate } from 'react-router-dom';
 import authService from '../../services/auth.service';
 const fields=signupFields;

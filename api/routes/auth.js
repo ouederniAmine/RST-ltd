@@ -95,7 +95,7 @@
             
             function send() {
                 const isMatch = bcrypt.compare(password, candidate.pwd);
-                let userid = candidate.userid;
+                let userid = candidate.id;
                 if (!isMatch) {
                     return res.status(400).json({message: 'Invalid password'});
                 }

@@ -1,5 +1,4 @@
 //  <Header/> component that render on both the login and signup pages for quick information and navigation
-import {Link} from 'react-router-dom';
 import logo from "../../assets/logo white.jpg"
 
 export default function Header({
@@ -24,9 +23,9 @@ export default function Header({
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600 mt-5">
             {paragraph} {' '}
-            <Link to={linkUrl} className="font-medium text-sky-600 hover:text-sky-500">
+            <a href={linkUrl} className="font-medium text-sky-600 hover:text-sky-500">
                 {linkName}
-            </Link>
+            </a>
             </p>
         </div>
     )

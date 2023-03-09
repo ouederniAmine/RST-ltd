@@ -1,25 +1,30 @@
 import "./widget.css";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import authService from "../../services/auth.service";
 
 const Widget = ({ type }) => {
   let data = {} ;
 
-  //temporary
-  const amount = 100;
-  const diff = 20;
-  //get all the users number from the client table
-  const [users, setUsers] = useState(0);
   
-  //get all the invoices number from the invoice table
-  const [invoices, setInvoices] = useState(0);
- 
-
+  
+  const [apidata, setApiData] = useState({
+    fullname :"",  'email':"", 'pwd':"", 'current_balance':0, 'funds_on_hold':0, 'withdrawable_balance':0, 'date_of_birth':"", 'country':"", 'company_name':"", 'account_number':0, 'btc_wallet':"", 'bank_name':"", 'swift':0, 'iban':0, beneficiary_name:"", beneficiary_address:"", contact_information:"", bank_address:""
+  });
+  useEffect(() => {
+        axios
+        .get("http://localhost:3001/api/client/"+authService.getCurrentUser().userid)
+        .then((res) => {
+          setApiData(res.data[0]);
+          console.log(res.data)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }, []);
 
 
   switch (type) {
@@ -27,7 +32,7 @@ const Widget = ({ type }) => {
       data = {
         title: "Current Balanace",
         isMoney: false,
-        link: "See all users",
+        
         icon: (
           <PersonOutlinedIcon
             className="icon"
@@ -41,7 +46,7 @@ const Widget = ({ type }) => {
       break;
     case "FundsonHold":
       data = {
-        title: "Funds onHold",
+        title: "Funds on Hold",
         isMoney: false,
         link: "View all invoices",
         icon: (
@@ -57,7 +62,7 @@ const Widget = ({ type }) => {
       break;
     case "Withdraw":
       data = {
-        title: "WithdraW",
+        title: "Withdrawable funds",
         isMoney: true,
         link: "View net earnings",
         icon: (
@@ -78,9 +83,8 @@ const Widget = ({ type }) => {
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {users.length && "$"} {data.title === "USERS" ? users : invoices}
+          {data.title === "Current Balanace" ? apidata.current_balance : data.title === "Funds on Hold" ? apidata.funds_on_hold : apidata.withdrawable_balance}
         </span>
-        <span className="link">{data.link}</span>
       </div>
       <div className="right">
         

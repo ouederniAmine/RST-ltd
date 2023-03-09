@@ -1,7 +1,6 @@
-import { useContext, useState } from 'react';
+import {  useState } from 'react';
 import { loginFields } from "../../constants/formFields";
 import FormAction from "./FormAction";
-import FormExtra from "./FormExtra";
 import Input from "./Input";
 import { useNavigate } from 'react-router-dom';
 import authService from '../../services/auth.service';
@@ -60,7 +59,7 @@ export default function Login(){
                 )
             }
         </div>
-        <FormAction handleSubmit={handleSubmit} text="Login"/>
+        <FormAction handleSubmit={handleSubmit} text="Login" />
 
        
 
